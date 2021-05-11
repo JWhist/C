@@ -1,0 +1,19 @@
+Megan has shown us what archive files are, and how they can be used to bundle multiple files into a library, and that by including these library files in our compile process, we can include many supplemental functions simultaneously.
+
+This is a key benefit of using a library as opposed to a large number of arguments to the compiler at compile time, it is much simpler.
+
+Up until this point, we have been compiling programs using a command like:
+  
+  gcc mainfile.c file2.c file3.c -o executable_file
+
+One of the key drawbacks to this process is that when you compile multiple files in this way, whether individually, or in a library, they become "bundled in" with the executable file, and cannot be altered later without a complete recompile of the entire program.  This may not be possible if the program has shipped or is in a users hands.  This is also memory intensive; if multiple programs are running that use the same library, it will be loaded separately into each one, adding to memory overhead.
+
+Dynamic libraries address this problem by using "Position Independent Code" to create object files that exist outside of the primary executable file.  The Linker program (for example, "ld") places a reference to these object files in the main executable file, and they are not pulled into the program until runtime.  This allows for modified shared library files to replace the original files without affecting the ability of the executable to run, as well as for multiple programs to reference the same shared library file simultaneously, lowering overall memory usage.
+
+I'm going to demonstrate an example of running a program, modifying it's library, and then running it again to reflect the updates.  This is an example of the 'update-ability' benefit of shared libraries.
+
+Our hypothetical use case will be that of a program that creates a log file every time a user logs in to a program.  First we will build the program the traditional way, using:
+     gcc security.c log.c -o app
+Then, we will create a dynamic shared object from our log.c file and build the same program.  Lastly, we will alter the log.c file to include a timestamping function, rebuild the shared object and test our app executable to see if it will still run with the new shared object file.
+
+

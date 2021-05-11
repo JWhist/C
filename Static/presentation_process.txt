@@ -1,0 +1,25 @@
+1.  Show files log.c, log.h, security.c
+2.  Compile into a standard file using:
+    gcc security.c log.c -o app
+3.  Demonstrate ./app
+4.  HYPOTHETICAL - We want to add a timestamp to log - normally we would have
+    to recompile the entire program which could be impossible if it has shipped to users.
+5.  Uncomment out the commented bits
+6.  Create object file for log.c
+    gcc -I./ -fPIC -c log.c -o log.o    
+7.  Talk about position independent code and why
+8.  Convert log.o into a dynamic library using the shared command
+    gcc -shared log.o -o ./liblog.so
+9.  Create object file for security.c using command
+    gcc -I./ -c security.c -o security.o
+    Then compile the app using:
+    gcc security.o -L./ -llog -o app
+10. Demonstrate app
+11. HYPOTHETICAL - No longer want to display the timestamp, just the name
+12. Recomment out the relevant bits
+13. Create a new log.o object file using command
+    gcc -I./ -fPIC -c log.c -o log.o
+14. Create a new shared object file using command
+    gcc -shared log.o - o ./liblog.so (emphasize same file name)
+15. Demonstrate app should still pick up the .so file despite not recompiling
+    the app file itself.    
